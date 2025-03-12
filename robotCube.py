@@ -61,7 +61,7 @@ class Robot:
         
         self.tempsPas = 650
         self.tempsPause = 1700
-        self.niveauLed = 100
+        self.niveauLed = 8191
         
         self.setParam()
 
