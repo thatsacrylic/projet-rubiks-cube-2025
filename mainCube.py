@@ -9,9 +9,6 @@ import ihmCube
 import modeleCube
 import robotCube
 
-
-
-
 class Main:
     """
     Application Robot Rubik's cube.
