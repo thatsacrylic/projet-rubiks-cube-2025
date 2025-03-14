@@ -101,6 +101,7 @@ class Main:
                 # FERMER
                 elif k == 7:
                     self.gui.close()
+                    #todo: fermer programme
 
             self.gui.refresh()
 
