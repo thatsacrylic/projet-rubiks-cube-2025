@@ -78,6 +78,8 @@ CKCUBE = 0
 CKBOUTON = 1
 CKPOSITION = 2
 
+backgroundColor = 0
+
 class IHM (object):
     
     def __init__(self, cube, robot=None):
@@ -101,7 +103,7 @@ class IHM (object):
         self._blitText2("")
         
         self.enableChrono = False
-        self.backgroundColor = DEFAULTCOLORSCREEN
+        backgroundColor = DEFAULTCOLORSCREEN
 
         self.clearTxt()
         self.refresh()
@@ -116,9 +118,9 @@ class IHM (object):
     def setBackgroundColor(self, color):
 
         if color == 0:
-            self.backgroundColor = ERRORCOLORSCREEN
+            backgroundColor = ERRORCOLORSCREEN
         else:
-            self.backgroundColor = DEFAULTCOLORSCREEN
+            backgroundColor = DEFAULTCOLORSCREEN
 
     def _blitText1(self, titre, mvts):
 
@@ -186,7 +188,7 @@ class IHM (object):
 
     def refresh(self):
         
-        self.fenetre.fill(self.backgroundColor)
+        self.fenetre.fill(backgroundColor)
 
         for bp in self.bp:
             self.fenetre.blit(bp.image, bp.rect)
@@ -320,9 +322,9 @@ class ImgFace(object):
         self.DCASE = DCASE # espace entre deux cases de la même face
         
         self.image = pygame.Surface((3 * self.WCASE + 2 * self.DCASE, 3 * self.WCASE + 2 * self.DCASE))
-        self.image.fill(self.backgroundColor)
+        self.image.fill(backgroundColor)
         self.rect = self.image.get_rect()
-        
+
         self.rect.left = x
         self.rect.top = y
         
