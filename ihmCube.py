@@ -322,7 +322,7 @@ class ImgFace(object):
         self.image = pygame.Surface((3 * self.WCASE + 2 * self.DCASE, 3 * self.WCASE + 2 * self.DCASE))
         self.image.fill(self.backgroundColor)
         self.rect = self.image.get_rect()
-        
+        #test
         self.rect.left = x
         self.rect.top = y
         
