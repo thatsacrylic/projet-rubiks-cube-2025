@@ -50,7 +50,7 @@ XBP = XCUBE + WCUBE + (XCUBE - WBP) // 2
 DBP = 40
 
 DEFAULTCOLORSCREEN = pygame.Color('#214761')#'#21618C'
-ERRORCOLORSCREEN = pygame.Color('#D46262')
+ERRORCOLORSCREEN = pygame.Color('#712F2F')
 COLORBPR = pygame.Color('#BB3F3F') # #DFA5A5
 COLORBPP = pygame.Color('#662222')
 COLORBPD = pygame.Color('#AFAFAF')
