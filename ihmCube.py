@@ -72,7 +72,7 @@ YZONETXT2 = 10
 XCHRONO = 60
 YCHRONO = 30
 
-TEXTBP = ['RECONNAÎTRE', 'MÉLANGER', 'RÉSOUDRE', 'RESET', 'CLEAR', 'SUPER FLIP', "R L' D U' F B' R L'"]
+TEXTBP = ['RECONNAÎTRE', 'MÉLANGER', 'RÉSOUDRE', 'RESET', 'CLEAR', 'SUPER FLIP', "R L' D U' F B' R L'", "FERMER"]
 
 CKCUBE = 0
 CKBOUTON = 1
@@ -84,7 +84,7 @@ class IHM (object):
         #cube est une instance de la classe Cube
         pygame.init()
         
-        self.fenetre = pygame.display.set_mode((WSCREEN, HSCREEN))#, FULLSCREEN)
+        self.fenetre = pygame.display.set_mode((WSCREEN, HSCREEN), FULLSCREEN)
 
         pygame.display.set_caption("Robot Rubik's Cube")
         
@@ -105,6 +105,9 @@ class IHM (object):
 
         self.clearTxt()
         self.refresh()
+
+    def close(self):
+        pygame.close()
     
     def setRobot(self, robot):
         self.robot = robot

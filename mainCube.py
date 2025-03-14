@@ -98,6 +98,10 @@ class Main:
                 elif k == 6:
                     self.gui.animation("R L' D U' F B' R L'", "Séquence :")
 
+                # FERMER
+                elif k == 7:
+                    self.gui.close()
+
             self.gui.refresh()
 
 if __name__ == "__main__":
