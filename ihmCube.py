@@ -186,7 +186,7 @@ class IHM (object):
 
     def refresh(self):
         
-        self.fenetre.fill(backgroundColor)
+        self.fenetre.fill(self.backgroundColor)
 
         for bp in self.bp:
             self.fenetre.blit(bp.image, bp.rect)
@@ -320,7 +320,7 @@ class ImgFace(object):
         self.DCASE = DCASE # espace entre deux cases de la même face
         
         self.image = pygame.Surface((3 * self.WCASE + 2 * self.DCASE, 3 * self.WCASE + 2 * self.DCASE))
-        self.image.fill(backgroundColor)
+        self.image.fill(self.backgroundColor)
         self.rect = self.image.get_rect()
         
         self.rect.left = x
