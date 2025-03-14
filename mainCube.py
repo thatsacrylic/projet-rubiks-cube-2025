@@ -32,6 +32,7 @@ class Main:
     def aff_log(self, etape):
         if etape == 0:
             self.log = 'Initialisation :\nrobot '
+            self.gui.setBackgroundColor(0)
             self.gui.afficheMessage(self.log)
             self.enable_point = True
             self.proc_point = Thread(target=self.aff_point)
@@ -40,6 +41,7 @@ class Main:
             self.enable_point = False
             self.proc_point.join()            
             self.log += ' ok\nterminée !!'
+            self.gui.setBackgroundColor(1)
             self.gui.afficheMessage(self.log)
             time.sleep(2)
             self.gui.afficheMessage("")        

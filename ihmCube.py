@@ -49,7 +49,8 @@ YBP = 50
 XBP = XCUBE + WCUBE + (XCUBE - WBP) // 2
 DBP = 40
 
-COLORSCREEN = pygame.Color('#214761')#'#21618C'
+DEFAULTCOLORSCREEN = pygame.Color('#214761')#'#21618C'
+ERRORCOLORSCREEN = pygame.Color('#D46262')
 COLORBPR = pygame.Color('#BB3F3F') # #DFA5A5
 COLORBPP = pygame.Color('#662222')
 COLORBPD = pygame.Color('#AFAFAF')
@@ -100,6 +101,7 @@ class IHM (object):
         self._blitText2("")
         
         self.enableChrono = False
+        self.backgroundColor = DEFAULTCOLORSCREEN
 
         self.clearTxt()
         self.refresh()
@@ -110,6 +112,13 @@ class IHM (object):
     def clearTxt(self):
         self._blitText1("", "")
         self.enableChrono = False
+
+    def setBackgroundColor(self, color):
+
+        if color == 0:
+            self.backgroundColor = ERRORCOLORSCREEN
+        else:
+            self.backgroundColor = DEFAULTCOLORSCREEN
 
     def _blitText1(self, titre, mvts):
 
@@ -177,7 +186,7 @@ class IHM (object):
 
     def refresh(self):
         
-        self.fenetre.fill(COLORSCREEN)
+        self.fenetre.fill(backgroundColor)
 
         for bp in self.bp:
             self.fenetre.blit(bp.image, bp.rect)
@@ -311,7 +320,7 @@ class ImgFace(object):
         self.DCASE = DCASE # espace entre deux cases de la même face
         
         self.image = pygame.Surface((3 * self.WCASE + 2 * self.DCASE, 3 * self.WCASE + 2 * self.DCASE))
-        self.image.fill(COLORSCREEN) 
+        self.image.fill(backgroundColor)
         self.rect = self.image.get_rect()
         
         self.rect.left = x
