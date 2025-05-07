@@ -4,6 +4,10 @@ from robotCube import Robot
 
 c = Cube()
 
+'''
+suite: cube totalement résolut
+'''
+
 # c.cube['F'].setPiece(0, 'F')
 # c.cube['F'].setPiece(1, 'F')
 # c.cube['F'].setPiece(2, 'F')
@@ -61,6 +65,10 @@ c = Cube()
 # print(c)
 # c.rotations("R L' D U' F B' R L'")
 # print(c)
+
+'''
+suite: cube résolut avec une pièce sur deux d'inversée
+'''
 
 c.cube['F'].setPiece(0, 'F')
 c.cube['F'].setPiece(1, 'F')
