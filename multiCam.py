@@ -121,5 +121,3 @@ if __name__ == "__main__":
     for item in 'ABCD':
         img = multi.getPillImage(item)
         img.show()
-
-

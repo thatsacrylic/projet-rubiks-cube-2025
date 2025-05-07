@@ -8,6 +8,7 @@ from threading import Thread
 import ihmCube
 import modeleCube
 import robotCube
+import visioCube
 
 class Main:
     """
@@ -27,12 +28,14 @@ class Main:
         self.robot = robotCube.Robot()
         # le GUI accede aussi au robot
         self.gui.setRobot(self.robot)
+        # reconnaissance
+        self.recon = visioCube.Reconnaissance()
         self.aff_log(1)        
 
     def aff_log(self, etape):
         if etape == 0:
             self.log = 'Initialisation :\nrobot '
-            self.gui.setBackgroundColor(0)
+            #self.gui.setBackgroundColor(0)
             self.gui.afficheMessage(self.log)
             self.enable_point = True
             self.proc_point = Thread(target=self.aff_point)
@@ -41,7 +44,7 @@ class Main:
             self.enable_point = False
             self.proc_point.join()            
             self.log += ' ok\nterminée !!'
-            self.gui.setBackgroundColor(1)
+            #self.gui.setBackgroundColor(1)
             self.gui.afficheMessage(self.log)
             time.sleep(2)
             self.gui.afficheMessage("")        
@@ -66,7 +69,18 @@ class Main:
                 # RECONNAÎTRE
                 if k == 0:
                     self.cube.clear()
-                    # TODO : ecrire une méthode
+                    self.recon.load_img(0)
+                    while self.recon.running:
+                        self.recon.img_update()
+                        if not self.recon.running:
+                            break
+                    cv2.destroyAllWindows()
+                    cube_str = self.recon.cube2str()
+                    # exemple cube_str = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB"
+                    if len(cube_str) == 9*6:
+                        self.cube.str2cube(cube_str)
+                    else:
+                        self.gui.afficheMessage("Erreur de reconnaissance, cube non valide")
                 
                 # MÉLANGER
                 elif k == 1:
@@ -112,4 +126,3 @@ if __name__ == "__main__":
 
     appli = Main()
     appli.run()
-
