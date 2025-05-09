@@ -9,6 +9,7 @@ version:
 V1.0 : version de départ du projet. Cette version contient juste les structures pour afficher une photo du cube.
 
 V1.1 : +  nous renvoyer le code RGB d'un pixel cliqué avec la souris avec sa position.
+V1.2 : +  nous renvoyer la moyenne des codes RGB des pixels autour du pixel cliqué.
 """
 
 autor = 'Esteban-angel GONZALEZ-DURAND'
