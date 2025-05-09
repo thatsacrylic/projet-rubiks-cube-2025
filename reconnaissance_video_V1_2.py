@@ -12,8 +12,8 @@ V1.1 : +  nous renvoyer le code RGB d'un pixel cliqué avec la souris avec sa po
 """
 
 autor = 'Esteban-angel GONZALEZ-DURAND'
-version = '1.1'
-date = '07/05/2025'
+version = '1.2'
+date = '09/05/2025'
 
 import cv2
 import pygame
