@@ -1,7 +1,7 @@
 """
 Version V1
 
-Projet Robot resolveur de Rubik's Cube 2024-2025
+Projet Robot resolveur de Rubik's Cube 2025
 
 Reconnaissance du rubik's cube pour le robot avec une seule caméra
 
@@ -34,7 +34,7 @@ largeur = int(camera.get(cv2.CAP_PROP_FRAME_WIDTH))
 hauteur = int(camera.get(cv2.CAP_PROP_FRAME_HEIGHT))
 print(f'Taille : {largeur}*{hauteur}')    
 
-# 
+# définition de la page
 pygame.init()
 screen = pygame.display.set_mode((largeur, hauteur))
 pygame.display.set_caption("Webcam avec Pygame")
@@ -47,6 +47,24 @@ def prendre_photo():
     img = np.rot90(img)  # Rotation pour affichage correct si nécessaire
    
     return img
+
+def recuperer_pixel_autour(x0, y0, n):
+    '''
+    On récupère les n*n pixels autour de celui sur lequel on a cliqué puis en fait la moyenne
+    
+    return code RGB (ex: [102 87 77])
+    '''
+    r, v, b = 0, 0, 0
+    for x in range(x0 - n // 2 + 1, x0 + n // 2 + 1):
+        for y in range(y0 - n // 2 + 1, y0 + n // 2 + 1):
+            px = img[x][y]
+            r = r + int(px[0])
+            v = v + int(px[1])
+            b = b + int(px[2])
+    moy_r = r // n**2
+    moy_v = v // n**2
+    moy_b = b // n**2
+    return [moy_r, moy_v, moy_b]
 
 # Affichage dans la fenêtre Pygame
 img = prendre_photo()
@@ -62,10 +80,14 @@ while True:
             camera.release()
             exit()
 
-        # Appuie sur la touche ESPACE pour capturer une image
+        # Appuie sur le clic gauche pour avoir sa position et son code RGB
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             print(event.pos) #coordonnées du clique
-            print(img[event.pos[0]][event.pos[1]])
+            u = img[event.pos[0]][event.pos[1]]
+#             print(u, type(u), u[0])
+#             for c in u:
+#                 print(c)
+            print(recuperer_pixel_autour(event.pos[0], event.pos[1], 6))
             
                 
                 
@@ -73,3 +95,5 @@ while True:
 #                 cv2.imwrite("capture_depuis_pygame.jpg", cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 #                 print("Image capturée !")
 #                 img_saved = True
+
+
