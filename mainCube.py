@@ -69,12 +69,7 @@ class Main:
                 # RECONNAÎTRE
                 if k == 0:
                     self.cube.clear()
-                    self.recon.load_img(0)
-                    while self.recon.running:
-                        self.recon.img_update()
-                        if not self.recon.running:
-                            break
-                    cv2.destroyAllWindows()
+                    self.recon.start()
                     if self.recon.cube.isNotClear():
                         self.cube.str2cube(self.recon.cube2str())
                 

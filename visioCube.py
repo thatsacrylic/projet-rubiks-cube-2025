@@ -299,7 +299,14 @@ class Reconnaissance:
 
     def check_pixel(self, x, y):
         # Vérifier si la face actuelle est complète
-        current_face = cam_faces[self.current_index][self.current_face_index]
+        if face_id is None:
+            if self.current_index >= len(cam_faces) or self.current_face_index >= len(cam_faces[self.current_index]):
+                print("Erreur: toutes les faces ont été traitées")
+                return
+            current_face = cam_faces[self.current_index][self.current_face_index]
+        else:
+            current_face = face_id
+
         if len(self.faces[current_face]) >= 9:
             self.current_face_index += 1
             if self.current_face_index >= len(cam_faces[self.current_index]):
