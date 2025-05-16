@@ -379,5 +379,11 @@ if __name__ == "__main__":
     """
     recon = Reconnaissance()
     recon.start()
-    print("Reconnaissance terminée")
-    print(recon.cube2str())
+    if sum(len(recon.cube.cube[face].__repr__().replace('x', '')) for face in recon.cube.cube) >= recon.maxi:
+        print("Reconnaissance terminée")
+        print(recon.cube2str())
+    else:
+        print(recon.cube2str())
+        recon.cube.clear()
+        print("Reconnaissance incomplète")
+        recon.start()
