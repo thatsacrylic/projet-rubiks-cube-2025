@@ -39,7 +39,7 @@ base_couleurs = {
     2: [52, 134, 40],   # Vert
     3: [17, 190, 182],  # Jaune
     4: [63, 90, 193],   # Orange
-    5: [172, 167, 157], # Blanc
+    5: [212, 211, 216], # Blanc
 }
 
 # Juste pour le debug
@@ -62,8 +62,6 @@ cam_faces = {
     2: ['U', 'B', 'L'],     # Cam C
     3: ['L', 'F', 'D']      # Cam D
 }
-
-#TODO JSON
 
 def preprocess_image(image):
     """
