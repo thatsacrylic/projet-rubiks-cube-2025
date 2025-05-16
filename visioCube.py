@@ -297,7 +297,7 @@ class Reconnaissance:
         self.current_face_index = 0
         return self.current_img
 
-    def check_pixel(self, x, y):
+    def check_pixel(self, x, y, face_id=None):
         # Vérifier si la face actuelle est complète
         if face_id is None:
             if self.current_index >= len(cam_faces) or self.current_face_index >= len(cam_faces[self.current_index]):
@@ -364,8 +364,8 @@ class Reconnaissance:
         :return: None
         """
         for point in pixels_check:
-            self.check_pixel(point.x, point.y)
-        
+            self.check_pixel(point.x, point.y, point.face_id)
+
     def cube2str(self):
         """
         Convertit le cube en chaîne de caractères compatible avec Cube.__repr__.
