@@ -149,7 +149,7 @@ pixels_check = [
 
     PointMesure(x=271, y=145, face_id='U'),
     PointMesure(x=312, y=139, face_id='U'),
-    PointMesure(x=354, y=132, face_id='U'),
+    PointMesure(x=350, y=130, face_id='U'),
     PointMesure(x=242, y=190, face_id='U'),
     PointMesure(x=288, y=176, face_id='U'),
     PointMesure(x=315, y=173, face_id='U'),
