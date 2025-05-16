@@ -233,6 +233,7 @@ class Reconnaissance:
         self.points_global = []                                                 # Liste des points sélectionnés
         self.running = True                                                     # État de l'application
         self.current_face_index = 0                                             # Index de la face actuelle
+        self.current_piece_index = 0                                            # Index de la pièce actuelle
 
         import os
         try:
