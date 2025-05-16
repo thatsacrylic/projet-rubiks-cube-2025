@@ -44,12 +44,12 @@ base_couleurs = {
 
 # Juste pour le debug
 nom_couleurs = {
-    0: 'Rouge',
-    1: 'Bleu',
-    2: 'Vert',
-    3: 'Jaune',
-    4: 'Orange',
-    5: 'Blanc'
+    0: 'F',
+    1: 'R',
+    2: 'L',
+    3: 'D',
+    4: 'B',
+    5: 'U'
 }
 
 # Ordre des faces (U, D, F, B, L, R)
@@ -311,8 +311,7 @@ class Reconnaissance:
         if min(distances) > 80:  # Seuil ajustable
             print("Couleur non reconnue")
             return
-        couleur = list(base_couleurs.keys())[index]
-        print("Couleur détectée:", list(base_couleurs.keys())[index])
+        couleur = nom_couleurs[index]
         self.points_global.append([x, y])
 
         # Ajouter la couleur à la case correspondante
