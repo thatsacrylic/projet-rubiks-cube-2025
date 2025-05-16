@@ -63,8 +63,6 @@ cam_faces = {
     3: ['L', 'F', 'D']      # Cam D
 }
 
-
-
 class PointMesure:
     """
     Classe représentant un point de mesure sur le Rubik's cube.
