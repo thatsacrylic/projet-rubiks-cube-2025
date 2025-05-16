@@ -75,12 +75,8 @@ class Main:
                         if not self.recon.running:
                             break
                     cv2.destroyAllWindows()
-                    cube_str = self.recon.cube2str()
-                    # exemple cube_str = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB"
-                    if len(cube_str) == 9*6:
-                        self.cube.str2cube(cube_str)
-                    else:
-                        self.gui.afficheMessage("Erreur de reconnaissance, cube non valide")
+                    if self.recon.cube.isNotClear():
+                        self.cube.str2cube(self.recon.cube2str())
                 
                 # MÉLANGER
                 elif k == 1:

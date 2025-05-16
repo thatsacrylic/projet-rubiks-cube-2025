@@ -28,9 +28,9 @@ from itertools import product
 
 #importation des solveurs
 # pip install kociemba
-import kociemba
+#import kociemba
 # pip install RubikTwoPhase
-import twophase.solver  as sv
+#import twophase.solver  as sv
 
 #bibliotheque pour les graphique
 #import numpy as np
@@ -628,41 +628,42 @@ if __name__ == '__main__':
 #     
     c = Cube()
     
-    c.str2cube('UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB')
-    
+    #c.str2cube('UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB')
+    c.cube['F'].setPiece(2, 'R')
+    c.cube['D'].setPiece(8, 'U')
     print(c)
     
-    txt = ''
-    for i in range(54):
-        txt += chr(i + 40)
-    print(txt)
+    # txt = ''
+    # for i in range(54):
+    #     txt += chr(i + 40)
+    # print(txt)
     
-    c.str2cube(txt)
+    # c.str2cube(txt)
     
-    print(c)  
-    c.rotation('F')  
-    print(c.__repr__())
+    # print(c)  
+    # c.rotation('F')  
+    # print(c.__repr__())
     
     
-    transformation = []
-    mvts = []
+    # transformation = []
+    # mvts = []
     
-    ind = ("", "'", "2")
+    # ind = ("", "'", "2")
 
-    for m in 'URFDLB':
-        for i in range(3):
-            c.rotation(m + ind[i])
-            mvts.append(m + ind[i])
-            lst = [i for i in range(54)]
-            txt = c.__repr__()
+    # for m in 'URFDLB':
+    #     for i in range(3):
+    #         c.rotation(m + ind[i])
+    #         mvts.append(m + ind[i])
+    #         lst = [i for i in range(54)]
+    #         txt = c.__repr__()
             
-            for i in range(54):
-                if i not in (4, 13, 22, 31, 40, 49):
-                    lst[i] = ord(txt[i]) - 40
-            transformation.append(lst)
-    print(len(transformation))        
-    for u in transformation:
-        print(u)
+    #         for i in range(54):
+    #             if i not in (4, 13, 22, 31, 40, 49):
+    #                 lst[i] = ord(txt[i]) - 40
+    #         transformation.append(lst)
+    # print(len(transformation))        
+    # for u in transformation:
+    #     print(u)
     
     #c.str2cube('LUBFRDLUBFRDLUBFRDLUBFRDLUBFRDLUBFRDLUBFRDLUBFRDLUBFRD')
 #     print(c.__repr__())

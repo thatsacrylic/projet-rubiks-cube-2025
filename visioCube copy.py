@@ -21,7 +21,6 @@ import time
 import json
 import cv2
 import numpy as np
-import modeleCube
 
 # CAM 0/A: B-R-D
 # CAM 1/B: U-R-F
@@ -224,7 +223,6 @@ class Reconnaissance:
         if not self.imgs or len(self.imgs) != 4:
             raise ValueError("Échec de la capture des images des caméras")
 
-        self.cube = modeleCube.Cube()                                           # Initialisation du cube
         self.faces = {'U': [], 'D': [], 'F': [], 'B': [], 'L': [], 'R': []}     # Initialisation des faces
         self.maxi = 9 * len(self.faces)                                         # 54 cases
         self.current_index = 0                                                  # Index de la caméra actuelle
@@ -313,27 +311,24 @@ class Reconnaissance:
         couleur = list(base_couleurs.keys())[index]
         self.points_global.append([x, y])
 
-        # Ajouter la couleur à la case correspondante
-        face_pos = self.current_piece_index
-        self.cube.cube[current_face].setPiece(face_pos, couleur)
-        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]})")
+        # Ajout couleur à la face
+        self.faces[current_face].append(couleur)
+        print(f"{current_face}: {', '.join(nom_couleurs[c] for c in self.faces[current_face])}")
         self.draw_rect(x, y)
         self.update_display()
 
-        # Vérifier si la face est complète
-        self.current_piece_index += 1
-        if self.current_piece_index >= 9:
+        # Vérification si la face est complète
+        if len(self.faces[current_face]) >= 9:
             self.current_face_index += 1
-            self.current_piece_index = 0
             if self.current_face_index >= len(cam_faces[self.current_index]):
                 self.next_camera()
 
-        # Vérifier si le cube est complet
-        if sum(len(self.cube.cube[face].__repr__().replace('x', '')) for face in self.cube.cube) >= self.maxi:
-            print("Cube complet")
+        # Vérification si toutes les faces sont complètes
+        if sum(len(face) for face in self.faces.values()) >= self.maxi:
+            print("Cube complet :", self.faces)
             self.running = False
             with open('cube.json', 'w') as f:
-                json.dump({face: self.cube.cube[face].__repr__() for face in ordre_faces}, f)
+                json.dump(self.faces, f)
             cv2.destroyAllWindows()
 
     def next_camera(self):
@@ -402,13 +397,28 @@ class Reconnaissance:
                         self.faces[current_face].pop()
                         self.points_global.pop()
                     self.update_display()
-        
+    
+    def get_face(self, face):
+        """
+        Récupère la face spécifiée.
+        :param face: Nom de la face (U, D, F, B, L, R).
+        :return: Liste des couleurs de la face ou None si erreur.
+        """
+        if face not in self.faces:
+            print(f"Erreur: Face {face} non reconnue")
+            return None
+        return self.faces[face]
+
     def cube2str(self):
         """
-        Convertit le cube en chaîne de caractères compatible avec Cube.__repr__.
-        :return: Représentation en chaîne du cube (54 caractères, ordre URFDLB).
+        Convertit le cube en chaîne de caractères.
+        :return: Représentation en chaîne du cube.
         """
-        return self.cube.__repr__()
+        cube_str = ""
+        for face in ordre_faces:
+            for couleur in self.faces[face]:
+                cube_str += str(couleur)
+        return cube_str
 
 if __name__ == "__main__":
     try:
