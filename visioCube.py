@@ -365,3 +365,12 @@ class Reconnaissance:
         :return: Représentation en chaîne du cube (54 caractères, ordre URFDLB).
         """
         return self.cube.__repr__()
+
+if __name__ == "__main__":
+    """
+    Point d'entrée principal pour la reconnaissance des couleurs.
+    """
+    recon = Reconnaissance()
+    recon.start()
+    print("Reconnaissance terminée")
+    print(recon.cube2str())
