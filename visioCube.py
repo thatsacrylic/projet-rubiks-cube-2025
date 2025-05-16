@@ -52,8 +52,8 @@ nom_couleurs = {
     5: 'U'
 }
 
-# Ordre des faces (U, D, F, B, L, R)
-ordre_faces = ['U', 'D', 'F', 'B', 'L', 'R']
+# Ordre des faces
+ordre_faces = 'LFRBUD'
 
 # Caméras et faces respectives
 cam_faces = {
@@ -317,7 +317,7 @@ class Reconnaissance:
         # Ajouter la couleur à la case correspondante
         face_pos = self.current_piece_index
         self.cube.cube[current_face].setPiece(face_pos, couleur)
-        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]})")
+        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}), {x}, {y}")
         self.draw_rect(x, y)
         self.update_display()
 
