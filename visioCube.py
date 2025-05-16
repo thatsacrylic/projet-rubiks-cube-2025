@@ -312,6 +312,7 @@ class Reconnaissance:
             print("Couleur non reconnue")
             return
         couleur = list(base_couleurs.keys())[index]
+        print("Couleur détectée:", list(base_couleurs.keys())[index])
         self.points_global.append([x, y])
 
         # Ajouter la couleur à la case correspondante
