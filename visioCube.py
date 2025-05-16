@@ -63,6 +63,50 @@ cam_faces = {
     3: ['L', 'F', 'D']      # Cam D
 }
 
+
+
+class PointMesure:
+    """
+    Classe représentant un point de mesure sur le Rubik's cube.
+    Contient les coordonnées, l'identifiant de la face et la couleur mesurée.
+    Attributs:
+        - x: Coordonnée x du point.
+        - y: Coordonnée y du point.
+        - face_id: Identifiant de la face (U, D, F, B, L, R).
+        - couleur: Couleur mesurée (0-5).
+    Méthodes:
+        - __init__(): Initialise le point de mesure.
+        - __str__(): Représentation en chaîne du point de mesure.
+        - capture(x, y, face_id, couleur): Capture les données du point de mesure.
+    """
+    def __init__(self, x=0, y=0, face_id=''):
+        """
+        Initialisation du point de mesure.
+        """
+        self.x = x
+        self.y = y
+        self.face_id = face_id
+
+    def __str__(self):
+        """
+        Représentation en chaîne du point de mesure.
+        :return: Chaîne formatée.
+        """
+        return f"PointMesure(x={self.x}, y={self.y}, face_id='{self.face_id}', couleur={self.couleur})"
+
+    def capture(self, x, y, face_id, couleur):
+        """
+        Capture les données du point de mesure.
+        :param x: Coordonnée x.
+        :param y: Coordonnée y.
+        :param face_id: Identifiant de la face.
+        :param couleur: Couleur mesurée.
+        """
+        self.x = x
+        self.y = y
+        self.face_id = face_id
+        print(f"PointMesure capturé: {self}")
+
 # Pixels à check pour chaque caméra
 pixels_check = [
     PointMesure(x=190, y=229, face_id='R'),
@@ -205,48 +249,6 @@ class IHMvisio:
             else:
                 print(f"Échec capture pour la caméra {side}")
         return self.images
-
-class PointMesure:
-    """
-    Classe représentant un point de mesure sur le Rubik's cube.
-    Contient les coordonnées, l'identifiant de la face et la couleur mesurée.
-    Attributs:
-        - x: Coordonnée x du point.
-        - y: Coordonnée y du point.
-        - face_id: Identifiant de la face (U, D, F, B, L, R).
-        - couleur: Couleur mesurée (0-5).
-    Méthodes:
-        - __init__(): Initialise le point de mesure.
-        - __str__(): Représentation en chaîne du point de mesure.
-        - capture(x, y, face_id, couleur): Capture les données du point de mesure.
-    """
-    def __init__(self, x=0, y=0, face_id=''):
-        """
-        Initialisation du point de mesure.
-        """
-        self.x = x
-        self.y = y
-        self.face_id = face_id
-
-    def __str__(self):
-        """
-        Représentation en chaîne du point de mesure.
-        :return: Chaîne formatée.
-        """
-        return f"PointMesure(x={self.x}, y={self.y}, face_id='{self.face_id}', couleur={self.couleur})"
-
-    def capture(self, x, y, face_id, couleur):
-        """
-        Capture les données du point de mesure.
-        :param x: Coordonnée x.
-        :param y: Coordonnée y.
-        :param face_id: Identifiant de la face.
-        :param couleur: Couleur mesurée.
-        """
-        self.x = x
-        self.y = y
-        self.face_id = face_id
-        print(f"PointMesure capturé: {self}")
 
 class Reconnaissance:
     """
