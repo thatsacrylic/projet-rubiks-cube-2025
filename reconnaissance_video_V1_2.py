@@ -13,8 +13,8 @@ V1.2 : +  nous renvoyer la moyenne des codes RGB des pixels autour du pixel cliq
 """
 
 autor = 'Esteban-angel GONZALEZ-DURAND'
-version = '1.6'
-date = '16/05/2025'
+version = '1.7'
+date = '18/05/2025'
 
 import cv2
 import pygame
