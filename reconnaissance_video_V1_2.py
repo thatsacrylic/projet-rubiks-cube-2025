@@ -13,7 +13,7 @@ V1.2 : +  nous renvoyer la moyenne des codes RGB des pixels autour du pixel cliq
 """
 
 autor = 'Esteban-angel GONZALEZ-DURAND'
-version = '1.8'
+version = '1.9'
 date = '21/05/2025'
 
 import cv2
@@ -133,7 +133,7 @@ def stocker_moy_dans_color(col, face):
 def calc_dist_couleur(new_click):
     
     face = 'FRUBLD'
-    distances = [float(inf) for i in range(6)]
+    distances = [float('inf') for i in range(6)]
     
     R2, G2, B2 = recuperer_pixel_autour(new_click)
     
