@@ -361,6 +361,9 @@ class Reconnaissance:
             print("Cube complet")
             with open('cube.json', 'w') as f:
                 json.dump({face: self.cube.cube[face].__repr__() for face in ordre_faces}, f)
+        
+        # Retourne la couleur mesurée
+        return couleur
 
     def start(self):
         """
@@ -368,7 +371,8 @@ class Reconnaissance:
         :return: None
         """
         for point in pixels_check:
-            self.check_pixel(point.x, point.y, point.face_id)
+            print(f"Vérification du point: {point}, caméra {self.current_index}, face {point.face_id}")
+            print(self.check_pixel(point.x, point.y, point.face_id))
 
     def cube2str(self):
         """
