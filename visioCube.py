@@ -35,11 +35,11 @@ date = '14/03/2025'
 # Couleurs de base
 base_couleurs = {
     0: [50, 30, 172],   # Rouge
-    1: [123, 62, 7],    # Bleu
-    2: [52, 134, 40],   # Vert
-    3: [17, 190, 182],  # Jaune
-    4: [63, 90, 193],   # Orange
-    5: [212, 211, 216], # Blanc
+    1: [122, 60, 30],   # Bleu
+    2: [40, 162, 0],    # Vert
+    3: [6, 195, 193],   # Jaune
+    4: [29, 79, 231],   # Orange
+    5: [222, 220, 196], # Blanc
 }
 
 # Noms des couleurs
@@ -107,18 +107,18 @@ class PointMesure:
 
 # Pixels à check pour chaque caméra
 pixels_check = [
-    PointMesure(x=190, y=229, face_id='R'),
-    PointMesure(x=214, y=197, face_id='R'),
-    PointMesure(x=245, y=154, face_id='R'),
-    PointMesure(x=213, y=297, face_id='R'),
-    PointMesure(x=232, y=237, face_id='R'),
-    PointMesure(x=270, y=205, face_id='R'),
-    PointMesure(x=247, y=339, face_id='R'),
-    PointMesure(x=275, y=284, face_id='R'),
-    PointMesure(x=304, y=238, face_id='R'),
+    PointMesure(x=189, y=229, face_id='R'),
+    PointMesure(x=214, y=200, face_id='R'),
+    PointMesure(x=236, y=159, face_id='R'),
+    PointMesure(x=206, y=286, face_id='R'),
+    PointMesure(x=234, y=241, face_id='R'),
+    PointMesure(x=273, y=194, face_id='R'),
+    PointMesure(x=244, y=328, face_id='R'),
+    PointMesure(x=269, y=282, face_id='R'),
+    PointMesure(x=304, y=242, face_id='R'),
 
-    PointMesure(x=274, y=131, face_id='B'),
-    PointMesure(x=319, y=138, face_id='B'),
+    PointMesure(x=290, y=142, face_id='B'),
+    PointMesure(x=316, y=141, face_id='B'),
     PointMesure(x=338, y=138, face_id='B'),
     PointMesure(x=309, y=179, face_id='B'),
     PointMesure(x=368, y=304, face_id='B'),
@@ -338,7 +338,7 @@ class Reconnaissance:
 
         # Identification de la couleur
         index = distances.index(min(distances))
-        if min(distances) > 80:  # Seuil ajustable
+        if min(distances) > 100:  # Seuil ajustable
             print("Couleur non reconnue")
             return
         couleur = nom_couleurs[index]
