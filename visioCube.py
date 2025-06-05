@@ -71,7 +71,6 @@ class PointMesure:
         - x: Coordonnée x du point.
         - y: Coordonnée y du point.
         - face_id: Identifiant de la face (U, D, F, B, L, R).
-        - couleur: Couleur mesurée (0-5).
     Méthodes:
         - __init__(): Initialise le point de mesure.
         - __str__(): Représentation en chaîne du point de mesure.
@@ -90,7 +89,7 @@ class PointMesure:
         Représentation en chaîne du point de mesure.
         :return: Chaîne formatée.
         """
-        return f"PointMesure(x={self.x}, y={self.y}, face_id='{self.face_id}', couleur={self.couleur})"
+        return f"PointMesure(x={self.x}, y={self.y}, face_id='{self.face_id}')"
 
     def capture(self, x, y, face_id, couleur):
         """
