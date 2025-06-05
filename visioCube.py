@@ -353,7 +353,7 @@ class Reconnaissance:
         couleur = nom_couleurs[index]
 
         # Ajouter la couleur à la case correspondante
-        face_pos = self.current_piece_index
+        face_pos = len(self.faces[current_face])
         self.cube.cube[current_face].setPiece(face_pos, couleur)
         self.faces[current_face].append(couleur)  # Ajouter la couleur à la liste des pièces de la face
         print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}), {x}, {y}")
@@ -363,14 +363,10 @@ class Reconnaissance:
 
         # Vérifier si la face est complète
         if self.current_piece_index >= 9:
-            # Sauvegarder l'image de la caméra actuelle pour la face complétée
-            if self.current_img is not None:
-                filename = f"face_{current_face}.jpg"
-                cv2.imwrite(filename, self.current_img)
-                print(f"Image sauvegardée pour la face {current_face}: {filename}")
-            else:
-                print(f"Erreur: aucune image disponible pour la face {current_face}")
-
+            print(f"Face {current_face} complétée: {self.faces[current_face]}")
+            with open('cube.json', 'a') as f:
+                json.dump({current_face: self.faces[current_face]}, f, indent=2)
+                f.write('\n')
             self.current_piece_index = 0
             self.current_face_index += 1
             if self.current_face_index >= len(cam_faces[self.current_index]):
