@@ -1,6 +1,6 @@
 """
 Yann LANCELIN / Esteban-Angel GONZALEZ-DURAND
-03/2025 - 07/05/2025
+03/2025 - 04/06/2025
 
 -------
 
@@ -374,9 +374,6 @@ class Reconnaissance:
         return self.cube.__repr__()
 
 if __name__ == "__main__":
-    """
-    Point d'entrée principal pour la reconnaissance des couleurs.
-    """
     recon = Reconnaissance()
     recon.start()
     if sum(len(recon.cube.cube[face].__repr__().replace('x', '')) for face in recon.cube.cube) >= recon.maxi:

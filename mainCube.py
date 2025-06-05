@@ -72,6 +72,11 @@ class Main:
                     self.recon.start()
                     if self.recon.cube.isNotClear():
                         self.cube.str2cube(self.recon.cube2str())
+                    else:
+                        print(self.recon.cube2str())
+                        self.recon.cube.clear()
+                        print("Reconnaissance incomplète")
+                        self.recon.start()
                 
                 # MÉLANGER
                 elif k == 1:
