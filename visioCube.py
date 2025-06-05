@@ -347,17 +347,24 @@ class Reconnaissance:
         couleur = nom_couleurs[index]
 
         # Ajouter la couleur à la case correspondante
-        face_pos = self.current_piece_index
+        face_pos = len(self.faces[current_face])
         self.cube.cube[current_face].setPiece(face_pos, couleur)
-        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}), {x}, {y}")
+        self.faces[current_face].append(couleur)
+        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}, ({x}, {y})")
 
         # Vérifier si la face est complète
-        self.current_piece_index += 1
-        if self.current_piece_index >= 9:
+        if len(self.faces[current_face]) == 9:
+            print(f"Face {current_face} complétée: {self.faces[current_face]}")
+            with open('cube.json', 'a') as f:
+                json.dump({current_face: self.faces[current_face]}, f, indent=2)
+                f.write('\n')
             self.current_face_index += 1
             self.current_piece_index = 0
             if self.current_face_index >= len(cam_faces[self.current_index]):
                 self.current_index += 1
+                self.current_face_index = 0
+                if self.current_index < len(self.imgs):
+                    self.current_img = self.imgs[self.current_index]
 
         # Vérifier si le cube est complet
         if sum(len(self.cube.cube[face].__repr__().replace('x', '')) for face in self.cube.cube) >= self.maxi:
@@ -373,9 +380,19 @@ class Reconnaissance:
         Démarre la reconnaissance des couleurs.
         :return: None
         """
+        face_points = {'U': [], 'D': [], 'F': [], 'B': [], 'L': [], 'R': []}
         for point in pixels_check:
-            print(f"Vérification du point: {point}, caméra {self.current_index}, face {point.face_id}")
-            print(self.check_pixel(point.x, point.y, point.face_id))
+            face_points[point.face_id].append(point)
+        for face in ordre_faces:
+            print(f"Début traitement face {face}")
+            self.current_piece_index = 0
+            for point in face_points[face]:
+                print(f"Vérification du point: {point}, caméra {self.current_index}, face {point.face_id}")
+                self.check_pixel(point.x, point.y, point.face_id)
+            if len(self.faces[face]) == 9:
+                print(f"Face {face} terminée avec succès")
+            else:
+                print(f"Face {face} incomplète: {len(self.faces[face])} pièces")
 
     def cube2str(self):
         """
