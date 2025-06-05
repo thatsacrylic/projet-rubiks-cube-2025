@@ -16,6 +16,8 @@ Descriptif:
 Changelog:
     V1.0.0 (Version projet global: V1.4.0):
         Reconnaissance du cube à partir de la caméra et de l'interface image OpenCV
+    V1.5.0:
+        Sauvegarde d'une image lorsque chaque face est complète (9 pièces)
 """
 import time
 import json
@@ -29,10 +31,10 @@ import modeleCube
 # CAM 3/D: L-F-D
 
 autor = 'Grégory COUTABLE'
-version = '1.4.0_projet'
+version = '1.5.0_projet'
 date = '14/03/2025'
 
-# Couleurs de base
+# Couleurs de base (valeurs BGR pour la reconnaissance)
 base_couleurs = {
     0: [50, 30, 172],   # Rouge
     1: [122, 60, 30],   # Bleu
@@ -42,17 +44,17 @@ base_couleurs = {
     5: [222, 220, 196], # Blanc
 }
 
-# Noms des couleurs
+# Noms des couleurs (associés aux faces du cube)
 nom_couleurs = {
-    0: 'F',
-    1: 'R',
-    2: 'L',
-    3: 'D',
-    4: 'B',
-    5: 'U'
+    0: 'F',  # Face avant
+    1: 'R',  # Face droite
+    2: 'L',  # Face gauche
+    3: 'D',  # Face bas
+    4: 'B',  # Face arrière
+    5: 'U'   # Face haut
 }
 
-# Ordre des faces
+# Ordre des faces pour la sérialisation
 ordre_faces = 'LFRBUD'
 
 # Caméras et faces respectives
@@ -104,7 +106,7 @@ class PointMesure:
         self.face_id = face_id
         print(f"PointMesure capturé: {self}")
 
-# Pixels à check pour chaque caméra
+# Pixels à vérifier pour chaque caméra (coordonnées des pièces des faces)
 pixels_check = [
     PointMesure(x=189, y=229, face_id='R'),
     PointMesure(x=214, y=200, face_id='R'),
@@ -219,6 +221,7 @@ class IHMvisio:
     Classe d'interface de visualisation pour la reconnaissance des couleurs.
     Gère la capture d'images, le traitement et l'affichage.
     Méthodes:
+        - __init__(): Initialise l'interface de visualisation.
         - refresh(): Récupère les nouvelles images des caméras.
     """
     def __init__(self):
@@ -231,7 +234,7 @@ class IHMvisio:
 
     def refresh(self):
         """
-        Récupère les nouvelles images des caméras et les sauvegarde.
+        Récupère les nouvelles images des caméras.
         :return: Liste des images ou None si erreur.
         """
         if self.camera is None or self.camera.multi is None:
@@ -243,10 +246,6 @@ class IHMvisio:
             img = preprocess_image(img)
             if img is not None:
                 self.images.append(img)
-                # Save the image to a file
-                filename = f"camera_{side}.jpg"
-                cv2.imwrite(filename, img)
-                print(f"Image sauvegardée: {filename}")
             else:
                 print(f"Échec capture pour la caméra {side}")
         return self.images
@@ -301,6 +300,13 @@ class Reconnaissance:
         return self.current_img
 
     def check_pixel(self, x, y, face_id=None):
+        """
+        Vérifie la couleur d'un pixel pour une face donnée et sauvegarde l'image si la face est complète.
+        :param x: Coordonnée x du pixel.
+        :param y: Coordonnée y du pixel.
+        :param face_id: Identifiant de la face (optionnel, sinon déduit de la caméra actuelle).
+        :return: Couleur détectée ou None si erreur.
+        """
         # Vérifier si la face actuelle est complète
         if face_id is None:
             if self.current_index >= len(cam_faces) or self.current_face_index >= len(cam_faces[self.current_index]):
@@ -325,7 +331,7 @@ class Reconnaissance:
             return
         mean_color = np.mean(pixels, axis=(0, 1)).astype(int)
 
-        # Calcul de la distance couleurs
+        # Calcul de la distance des couleurs
         distances = []
         for couleur in base_couleurs.values():
             dist = np.sqrt(
@@ -347,31 +353,40 @@ class Reconnaissance:
         couleur = nom_couleurs[index]
 
         # Ajouter la couleur à la case correspondante
-        face_pos = len(self.faces[current_face])
+        face_pos = self.current_piece_index
         self.cube.cube[current_face].setPiece(face_pos, couleur)
-        self.faces[current_face].append(couleur)
-        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}, ({x}, {y})")
+        self.faces[current_face].append(couleur)  # Ajouter la couleur à la liste des pièces de la face
+        print(f"{current_face}[{face_pos}]: {couleur} ({nom_couleurs[index]}), {distances[index]}), {x}, {y}")
+
+        # Incrémenter l'index de la pièce
+        self.current_piece_index += 1
 
         # Vérifier si la face est complète
-        if len(self.faces[current_face]) == 9:
-            print(f"Face {current_face} complétée: {self.faces[current_face]}")
-            with open('cube.json', 'a') as f:
-                json.dump({current_face: self.faces[current_face]}, f, indent=2)
-                f.write('\n')
-            self.current_face_index += 1
+        if self.current_piece_index >= 9:
+            # Sauvegarder l'image de la caméra actuelle pour la face complétée
+            if self.current_img is not None:
+                filename = f"face_{current_face}.jpg"
+                cv2.imwrite(filename, self.current_img)
+                print(f"Image sauvegardée pour la face {current_face}: {filename}")
+            else:
+                print(f"Erreur: aucune image disponible pour la face {current_face}")
+
             self.current_piece_index = 0
+            self.current_face_index += 1
             if self.current_face_index >= len(cam_faces[self.current_index]):
                 self.current_index += 1
-                self.current_face_index = 0
                 if self.current_index < len(self.imgs):
                     self.current_img = self.imgs[self.current_index]
+                    self.current_face_index = 0
+                else:
+                    print("Toutes les caméras ont été traitées")
 
         # Vérifier si le cube est complet
         if sum(len(self.cube.cube[face].__repr__().replace('x', '')) for face in self.cube.cube) >= self.maxi:
             print("Cube complet")
             with open('cube.json', 'w') as f:
                 json.dump({face: self.cube.cube[face].__repr__() for face in ordre_faces}, f)
-        
+
         # Retourne la couleur mesurée
         return couleur
 
@@ -380,19 +395,9 @@ class Reconnaissance:
         Démarre la reconnaissance des couleurs.
         :return: None
         """
-        face_points = {'U': [], 'D': [], 'F': [], 'B': [], 'L': [], 'R': []}
         for point in pixels_check:
-            face_points[point.face_id].append(point)
-        for face in ordre_faces:
-            print(f"Début traitement face {face}")
-            self.current_piece_index = 0
-            for point in face_points[face]:
-                print(f"Vérification du point: {point}, caméra {self.current_index}, face {point.face_id}")
-                self.check_pixel(point.x, point.y, point.face_id)
-            if len(self.faces[face]) == 9:
-                print(f"Face {face} terminée avec succès")
-            else:
-                print(f"Face {face} incomplète: {len(self.faces[face])} pièces")
+            print(f"Vérification du point: {point}, caméra {self.current_index}, face {point.face_id}")
+            print(self.check_pixel(point.x, point.y, point.face_id))
 
     def cube2str(self):
         """
