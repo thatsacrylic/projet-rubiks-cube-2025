@@ -232,7 +232,7 @@ class IHMvisio:
 
     def refresh(self):
         """
-        Récupère les nouvelles images des caméras.
+        Récupère les nouvelles images des caméras et les sauvegarde.
         :return: Liste des images ou None si erreur.
         """
         if self.camera is None or self.camera.multi is None:
@@ -244,6 +244,10 @@ class IHMvisio:
             img = preprocess_image(img)
             if img is not None:
                 self.images.append(img)
+                # Save the image to a file
+                filename = f"camera_{side}.jpg"
+                cv2.imwrite(filename, img)
+                print(f"Image sauvegardée: {filename}")
             else:
                 print(f"Échec capture pour la caméra {side}")
         return self.images
