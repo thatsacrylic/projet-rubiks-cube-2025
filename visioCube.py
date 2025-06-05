@@ -337,7 +337,11 @@ class Reconnaissance:
 
         # Identification de la couleur
         index = distances.index(min(distances))
-        if min(distances) > 40:  # Seuil ajustable
+        print(f"Couleur mesurée: {mean_color}, distances: {distances}, index: {index}")
+        if index >= len(nom_couleurs):
+            print("Index de couleur hors limites")
+            return
+        if min(distances) > 80:  # Seuil ajustable
             print("Couleur non reconnue")
             return
         couleur = nom_couleurs[index]
